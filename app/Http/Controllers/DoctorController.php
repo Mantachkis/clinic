@@ -8,6 +8,7 @@ use Validator;
 
 class DoctorController extends Controller
 {
+    const RESULT_PER_PAGE = 5;
     /**
      * Display a listing of the resource.
      *
@@ -15,11 +16,12 @@ class DoctorController extends Controller
      */
     public function index(Request $request)
     {
+        $doctors = Doctor::orderBy('name')->paginate(self::RESULT_PER_PAGE);
         if ($request->search && 'all' == $request->search) {
             //Paieska
-            $doctors = Doctor::where('name', 'like', '%' . $request->s . '%')->orWhere('surname', 'like', '%' . $request->s . '%')->get();
+            $doctors = Doctor::where('name', 'like', '%' . $request->s . '%')->orWhere('surname', 'like', '%' . $request->s . '%')->paginate(self::RESULT_PER_PAGE)->withQueryString();;
         } else {
-            $doctors = Doctor::all();
+            $doctors = Doctor::orderBy('name')->paginate(self::RESULT_PER_PAGE);
         }
         return view('doctor.index', ['doctors' => $doctors, 's' => $request->s ?? '']);
     }

@@ -7,9 +7,11 @@ use App\Models\Owner;
 use App\Models\Pet;
 use Illuminate\Http\Request;
 use Validator;
+use PDF;
 
 class PetController extends Controller
 {
+    const RESULT_PER_PAGE = 5;
     /**
      * Display a listing of the resource.
      *
@@ -17,23 +19,23 @@ class PetController extends Controller
      */
     public function index(Request $request)
     {
-        $pets = Pet::orderBy('name')->get();
+        $pets = Pet::orderBy('name')->paginate(self::RESULT_PER_PAGE)->withQueryString();
         $doctors = Doctor::all();
         if ($request->sort) {
             if ('birth_date' == $request->sort && 'asc' == $request->sort_dir) {
-                $pets = Pet::orderBy('birth_date')->get();
+                $pets = Pet::orderBy('birth_date')->paginate(self::RESULT_PER_PAGE)->withQueryString();;
             } else if ('birth_date' == $request->sort && 'desc' == $request->sort_dir) {
-                $pets = Pet::orderBy('birth_date', 'desc')->get();
+                $pets = Pet::orderBy('birth_date', 'desc')->paginate(self::RESULT_PER_PAGE)->withQueryString();;
             } else if ('species' == $request->sort && 'desc' == $request->sort_dir) {
-                $pets = Pet::orderBy('species', 'desc')->get();
+                $pets = Pet::orderBy('species', 'desc')->paginate(self::RESULT_PER_PAGE)->withQueryString();;
             } else if ('species' == $request->sort && 'desc' == $request->sort_dir) {
-                $pets = Pet::orderBy('species', 'desc')->get();
+                $pets = Pet::orderBy('species', 'desc')->paginate(self::RESULT_PER_PAGE)->withQueryString();;
             } else {
                 $pets = Pet::all();
             }
         } else if ($request->filter && 'doctor' == $request->filter) {
 
-            $pets = Pet::where('doctor_id', $request->doctor_id)->get();
+            $pets = Pet::where('doctor_id', $request->doctor_id)->paginate(self::RESULT_PER_PAGE)->withQueryString();;
         }
 
         return view('pet.index', [
@@ -99,7 +101,7 @@ class PetController extends Controller
      */
     public function show(Pet $pet)
     {
-        //
+        return view('pet.show', ['pet' => $pet]);
     }
 
     /**
@@ -160,5 +162,10 @@ class PetController extends Controller
     {
         $pet->delete();
         return redirect()->route('pet.index')->with('success_message', 'Operation successful');
+    }
+    public function pdf(Pet $pet)
+    {
+        $pdf = PDF::loadView('pet.pdf', ['pet' => $pet]);
+        return $pdf->download($pet->name . '.pdf');
     }
 }

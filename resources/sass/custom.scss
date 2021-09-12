@@ -55,11 +55,8 @@ body {
 .navbar {
     border-bottom: 1px solid darkgray;
 }
-.cars-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    &__size {
+.pet-container {
+    &__spec {
         font-size: 15px;
         padding: 11px;
     }

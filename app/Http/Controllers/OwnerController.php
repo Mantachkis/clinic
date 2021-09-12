@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Owner;
 use Illuminate\Http\Request;
+use Validator;
 
 class OwnerController extends Controller
 {
+    const RESULT_PER_PAGE = 10;
     /**
      * Display a listing of the resource.
      *
@@ -14,12 +16,12 @@ class OwnerController extends Controller
      */
     public function index(Request $request)
     {
-
+        $owners = Owner::orderBy('surname')->paginate(self::RESULT_PER_PAGE)->withQueryString();
         if ($request->search && 'all' == $request->search) {
             //Paieska
-            $owners = Owner::where('name', 'like', '%' . $request->s . '%')->orWhere('surname', 'like', '%' . $request->s . '%')->get();
+            $owners = Owner::where('name', 'like', '%' . $request->s . '%')->orWhere('surname', 'like', '%' . $request->s . '%')->paginate(self::RESULT_PER_PAGE)->withQueryString();
         } else {
-            $owners = Owner::all();
+            $owners = Owner::paginate(self::RESULT_PER_PAGE)->withQueryString();;
         }
         return view('owner.index', ['owners' => $owners, 's' => $request->s ?? '']);
     }
@@ -32,6 +34,7 @@ class OwnerController extends Controller
      */
     public function create()
     {
+
         return view('owner.create');
     }
 

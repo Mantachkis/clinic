@@ -46,6 +46,7 @@
                                 </li>
                             @endforeach
                         </ul>
+                         <div class="mt-3">{{$owners->links()}}</div>
                     </div>
                 </div>
             </div>

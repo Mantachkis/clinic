@@ -44,7 +44,9 @@
                                 </li>
                             @endforeach
                         </ul>
+                          <div class="mt-3">{{$doctors->links()}}</div>
                     </div>
+                  
                 </div>
             </div>
         </div>

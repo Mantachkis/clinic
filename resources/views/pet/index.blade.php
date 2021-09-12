@@ -76,6 +76,7 @@
                                             <div>Doctor :  {{$pet->getDoctor->name}}  {{$pet->getDoctor->surname}}</div>
                                         </div>
                                         <div class="list-block__buttons">
+                                            <a href="{{route('pet.show',[$pet])}}" class="btn btn-info">Show</a>
                                             <a href="{{route('pet.edit',[$pet])}}" class="btn btn-success">Edit</a>
                                             <form method="POST" action="{{route('pet.destroy', $pet)}}">
                                                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -86,7 +87,7 @@
                                 </li>
                             @endforeach
                         </ul>
-               
+                        <div class="mt-3">{{$pets->links()}}</div>
                     </div>
                 </div>
             </div>

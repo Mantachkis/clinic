@@ -10062,16 +10062,11 @@ body {
   border-bottom: 1px solid darkgray;
 }
 
-.cars-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.cars-container__size {
+.pet-container__spec {
   font-size: 15px;
   padding: 11px;
 }
-.cars-container__about {
+.pet-container__about {
   font-size: 12px;
   padding: 8px;
 }

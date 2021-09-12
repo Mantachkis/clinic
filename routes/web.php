@@ -28,6 +28,7 @@ Route::group(['prefix' => 'pets'], function () {
     Route::post('update/{pet}', [PetController::class, 'update'])->name('pet.update');
     Route::post('delete/{pet}', [PetController::class, 'destroy'])->name('pet.destroy');
     Route::get('show/{pet}', [PetController::class, 'show'])->name('pet.show');
+    Route::get('pdf/{pet}', [PetController::class, 'pdf'])->name('pet.pdf');
 });
 Route::group(['prefix' => 'owners'], function () {
     Route::get('', [OwnerController::class, 'index'])->name('owner.index');
@@ -48,6 +49,6 @@ Route::group(['prefix' => 'doctors'], function () {
     Route::get('show/{doctor}', [DoctorController::class, 'show'])->name('doctor.show');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
