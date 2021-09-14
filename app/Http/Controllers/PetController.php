@@ -11,7 +11,7 @@ use PDF;
 
 class PetController extends Controller
 {
-    const RESULT_PER_PAGE = 5;
+    const RESULT_PER_PAGE = 20;
     /**
      * Display a listing of the resource.
      *
@@ -145,7 +145,7 @@ class PetController extends Controller
         $pet->species = $request->pet_species;
         $pet->birth_date = $request->pet_birth_date;
         $pet->document = $request->pet_document;
-        $pet->history  = $request->pet_history;
+        $pet->history  = str_replace("<script>", " ", $request->pet_history);
         $pet->owner_id = $request->owner_id;
         $pet->doctor_id = $request->doctor_id;
         $pet->save();

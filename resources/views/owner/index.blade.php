@@ -38,7 +38,7 @@
                                         <div class="list-block__buttons">
                                             <a href="{{route('owner.edit',[$owner])}}" class="btn btn-success">Edit</a>
                                             <form method="POST" action="{{route('owner.destroy', $owner)}}">
-                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                <button type="submit" style="background-color:#ff0000; "class="btn ">Delete</button>
                                                 @csrf
                                             </form>
                                         </div>
